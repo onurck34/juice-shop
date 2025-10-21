@@ -71,9 +71,11 @@ jobs:
         run: |
           docker run --rm \
             -v /var/run/docker.sock:/var/run/docker.sock \
+            -v "$PWD:/work" -w /work \
             aquasec/trivy:latest image \
             --scanners vuln \
-            --format sarif -o trivy.sarif \
+            --format sarif \
+            --output trivy.sarif \
             app-under-test:ci || true
 
       - name: Upload SARIF (Trivy)
